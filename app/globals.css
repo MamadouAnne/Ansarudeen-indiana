@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lora:wght@400;700&family=Montserrat:wght@300;400;600&display=swap');
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -17,11 +19,409 @@
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Montserrat', sans-serif;
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+/* Updated text */
+.illuminating-hearts::before {
+  content: "Illuminating hearts through zikr and Tawhid";
+}
+
+@keyframes smokyMove {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.3;
+  }
+  100% {
+    transform: translate(20%, -10%) scale(1.5);
+    opacity: 0;
+  }
+}
+
+.smoky-illumination {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: 
+    radial-gradient(circle at 50% 50%, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 50%),
+    radial-gradient(circle at 30% 70%, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 50%),
+    radial-gradient(circle at 70% 30%, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 50%);
+  filter: blur(40px);
+  animation: smokyMove 20s ease-in-out infinite alternate;
+}
+
+@keyframes firework {
+  0% { transform: translate(var(--x), var(--initialY)); width: var(--initialSize); opacity: 1; }
+  50% { width: 0.5vmin; opacity: 1; }
+  100% { width: var(--finalSize); opacity: 0; }
+}
+
+.firework,
+.firework::before,
+.firework::after {
+  --initialSize: 0.5vmin;
+  --finalSize: 45vmin;
+  --particleSize: 0.2vmin;
+  --color1: yellow;
+  --color2: khaki;
+  --color3: white;
+  --color4: lime;
+  --color5: gold;
+  --color6: mediumseagreen;
+  --y: -30vmin;
+  --x: -50%;
+  --initialY: 60vmin;
+  content: "";
+  animation: firework 2s infinite;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, var(--y));
+  width: var(--initialSize);
+  aspect-ratio: 1;
+  background: 
+    radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 50% 0%,
+    radial-gradient(circle, var(--color2) var(--particleSize), #0000 0) 100% 50%,
+    radial-gradient(circle, var(--color3) var(--particleSize), #0000 0) 50% 100%,
+    radial-gradient(circle, var(--color4) var(--particleSize), #0000 0) 0% 50%,
+    radial-gradient(circle, var(--color5) var(--particleSize), #0000 0) 80% 90%,
+    radial-gradient(circle, var(--color6) var(--particleSize), #0000 0) 95% 90%,
+    radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 10% 10%,
+    radial-gradient(circle, var(--color2) var(--particleSize), #0000 0) 25% 69%,
+    radial-gradient(circle, var(--color3) var(--particleSize), #0000 0) 40% 80%;
+  background-size: 0.5vmin 0.5vmin;
+  background-repeat: no-repeat;
+  border-radius: 50%;
+  filter: drop-shadow(0 0 10px #fff);
+}
+
+.firework::before {
+  --x: -50%;
+  --y: -50%;
+  --initialY: -50%;
+}
+
+.firework::after {
+  --x: -50%;
+  --y: -50%;
+  --initialY: -50%;
+  animation-delay: -0.25s;
+}
+
+.firework:nth-child(2) {
+  --x: 30vmin;
+}
+
+.firework:nth-child(2),
+.firework:nth-child(2)::before,
+.firework:nth-child(2)::after {
+  --color1: pink;
+  --color2: violet;
+  --color3: fuchsia;
+  --color4: orchid;
+  --color5: plum;
+  --color6: lavender;  
+  animation-delay: -0.4s;
+}
+
+.firework:nth-child(3) {
+  --x: -30vmin;
+  --y: -10vmin;
+}
+
+.firework:nth-child(3),
+.firework:nth-child(3)::before,
+.firework:nth-child(3)::after {
+  --color1: cyan;
+  --color2: lightcyan;
+  --color3: lightskyblue;
+  --color4: deepskyblue;
+  --color5: aqua;
+  --color6: aquamarine;
+  animation-delay: -0.6s;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;700&display=swap');
+
+@keyframes glow {
+  0%, 100% {
+    text-shadow: 0 0 2px #fff, 0 0 4px #fff, 0 0 6px #fff, 0 0 8px #fff, 0 0 10px #fff;
+  }
+  50% {
+    text-shadow: 0 0 1px #fff, 0 0 2px #fff, 0 0 3px #fff, 0 0 4px #fff, 0 0 5px #fff;
+  }
+}
+
+.font-arabic {
+  font-family: 'Noto Naskh Arabic', serif;
+}
+
+.animate-glow {
+  color: #fff;
+  text-shadow: 0 0 2px #fff, 0 0 4px #fff, 0 0 6px #fff;
+}
+
+/* Add this to your existing styles */
+
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap');
+
+.artistic-logo {
+  position: relative;
+  display: inline-block;
+  padding: 1em 1.5em;
+  overflow: hidden;
+}
+
+.logo-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, #1a5f7a, #57c5b6);
+  transform: skew(-10deg);
+  z-index: -1;
+}
+
+.logo-text, .logo-subtext {
+  font-family: 'Cinzel', cursive;
+  display: block;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  position: relative;
+  z-index: 2;
+}
+
+.logo-text {
+  font-size: 1.8rem;
+  font-weight: 700;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.logo-subtext {
+  font-size: 1rem;
+  font-weight: 400;
+  margin-top: -0.3em;
+}
+
+.logo-decoration {
+  position: absolute;
+  border: 2px solid rgba(255,255,255,0.5);
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.logo-decoration-1 {
+  width: 40px;
+  height: 40px;
+  top: -20px;
+  left: -20px;
+  animation: rotate 10s linear infinite;
+}
+
+.logo-decoration-2 {
+  width: 30px;
+  height: 30px;
+  bottom: -15px;
+  right: -15px;
+  animation: rotate 8s linear infinite reverse;
+}
+
+.logo-decoration-3 {
+  width: 20px;
+  height: 20px;
+  top: 50%;
+  right: -10px;
+  animation: pulse 4s ease-in-out infinite;
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(1.2); opacity: 1; }
+}
+
+.artistic-logo::before,
+.artistic-logo::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at top left, rgba(255,255,255,0.2) 0%, transparent 50%),
+    radial-gradient(circle at bottom right, rgba(255,255,255,0.2) 0%, transparent 50%);
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.artistic-logo:hover::before,
+.artistic-logo:hover::after {
+  opacity: 1;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .logo-text {
+    font-size: 1.4rem;
+  }
+  .logo-subtext {
+    font-size: 0.8rem;
+  }
+}
+
+/* Add this to your existing styles */
+
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400&display=swap');
+
+.artistic-welcome {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: linear-gradient(45deg, #f3ec78, #af4261);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  position: relative;
+  padding: 0.5em;
+}
+
+.welcome-text {
+  font-family: 'Dancing Script', cursive;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.community-text {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
+  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+}
+
+.artistic-welcome::before,
+.artistic-welcome::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at top left, rgba(243, 236, 120, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at bottom right, rgba(175, 66, 97, 0.3) 0%, transparent 50%);
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.artistic-welcome:hover::before,
+.artistic-welcome:hover::after {
+  opacity: 1;
+}
+
+@media (max-width: 640px) {
+  .welcome-text {
+    font-size: 1.5rem;
+  }
+  .community-text {
+    font-size: 0.8rem;
+  }
+}
+
+/* Add this to your existing styles */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;600&display=swap');
+
+.inspiring-message {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.5rem;
+  line-height: 1.2;
+  color: #ffffff;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.message-line {
+  position: relative;
+  padding: 0 0.5em;
+}
+
+.message-line:first-child {
+  font-weight: 600;
+}
+
+.message-line:last-child {
+  font-weight: 300;
+  font-style: italic;
+}
+
+.message-line::before,
+.message-line::after {
+  content: '';
+  position: absolute;
+  height: 2px;
+  width: 0;
+  background: linear-gradient(to right, transparent, #ffffff, transparent);
+  transition: width 0.5s ease;
+}
+
+.message-line::before {
+  left: 0;
+  top: 0;
+}
+
+.message-line::after {
+  right: 0;
+  bottom: 0;
+}
+
+.inspiring-message:hover .message-line::before,
+.inspiring-message:hover .message-line::after {
+  width: 100%;
+}
+
+@media (max-width: 640px) {
+  .inspiring-message {
+    font-size: 1.8rem;
+  }
+}
+
+.minimalist-logo {
+  font-family: 'Arial', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  background-color: #ffffff;
+  border-radius: 50%;
+}
+
+.logo-text {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #4CAF50;
 }
