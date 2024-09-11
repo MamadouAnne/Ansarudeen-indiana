@@ -2,8 +2,51 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 
 export default function Home() {
+  const [imageError, setImageError] = useState<{ [key: string]: boolean }>({});
+  const [modalContent, setModalContent] = useState<{ type: 'image' | 'video', src: string, alt?: string } | null>(null);
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
+
+  const mediaItems = [
+    { type: 'image', src: '/images/medina.jpg', alt: 'The Mosque of Medina Baye', caption: 'The Mosque of Medina Baye' },
+    { type: 'video', src: '/videos/BabacarThiam.mp4', caption: 'Babacar Thiam extrait Gamou Medina Baye 1997' },
+    { type: 'image', src: '/images/event2.jpg', alt: 'Charity drive', caption: 'Recent charity drive' },
+    { type: 'image', src: '/images/event3.jpg', alt: 'Youth program', caption: 'Youth educational program' },
+    { type: 'video', src: '/videos/celebration.mp4', caption: 'Eid celebration highlights' },
+    { type: 'image', src: '/images/event4.jpg', alt: 'Workshop', caption: 'Islamic calligraphy workshop' },
+  ];
+
+  const openModal = (index: number) => {
+    setCurrentIndex(index);
+    setModalContent({
+      type: mediaItems[index].type as 'image' | 'video',
+      src: mediaItems[index].src,
+      alt: 'alt' in mediaItems[index] ? mediaItems[index].alt : undefined
+    });
+  };
+
+  const nextItem = () => {
+    const newIndex = (currentIndex + 1) % mediaItems.length;
+    setCurrentIndex(newIndex);
+    setModalContent({
+      type: mediaItems[newIndex].type as 'image' | 'video',
+      src: mediaItems[newIndex].src,
+      alt: 'alt' in mediaItems[newIndex] ? mediaItems[newIndex].alt : undefined
+    });
+  };
+
+  const prevItem = () => {
+    const newIndex = (currentIndex - 1 + mediaItems.length) % mediaItems.length;
+    setCurrentIndex(newIndex);
+    setModalContent({
+      type: mediaItems[newIndex].type as 'image' | 'video',
+      src: mediaItems[newIndex].src,
+      alt: 'alt' in mediaItems[newIndex] ? mediaItems[newIndex].alt : undefined
+    });
+  };
+
   return (
     <div className="flex flex-col min-h-screen relative overflow-hidden bg-gradient-to-br from-green-400 to-blue-500">
       {/* Remove the Spiritual Inspiration section */}
@@ -87,6 +130,63 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Media Gallery Section */}
+      <section className="relative z-10 py-16 px-4">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-3xl font-bold mb-8 text-center text-white">Our Activities and Events</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {mediaItems.map((item, index) => (
+              <div key={index} className="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-xl overflow-hidden shadow-xl cursor-pointer"
+                   onClick={() => openModal(index)}>
+                {item.type === 'image' ? (
+                  imageError[item.src] ? (
+                    <div className="w-full h-48 flex items-center justify-center bg-gray-200 text-gray-500">
+                      Image not available
+                    </div>
+                  ) : (
+                    <Image 
+                      src={item.src} 
+                      alt={item.alt || ''} 
+                      width={400} 
+                      height={300} 
+                      className="w-full h-48 object-cover"
+                      onError={() => setImageError(prev => ({ ...prev, [item.src]: true }))}
+                    />
+                  )
+                ) : (
+                  <video src={item.src} className="w-full h-48 object-cover" />
+                )}
+                <p className="p-4 text-white text-center">{item.caption}</p>
+              </div>
+            ))}
+          </div>
+          <div className="text-center mt-8">
+            <Link href="/gallery" className="bg-white text-green-800 px-6 py-3 rounded-full text-lg font-semibold hover:bg-opacity-90 transition duration-300 shadow-lg">
+              View Full Gallery
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* YouTube Video Section */}
+      <section className="relative z-10 py-16 px-4">
+        <div className="max-w-4xl mx-auto bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-xl shadow-xl p-8">
+          <h2 className="text-3xl font-bold mb-8 text-center text-white">Featured Video</h2>
+          <div className="aspect-w-16 aspect-h-9">
+            <iframe
+              src="https://www.youtube.com/embed/v94UFWLhZDQ"
+              title="YouTube video player"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              className="w-full h-full rounded-lg"
+            ></iframe>
+          </div>
+          <p className="text-lg text-white text-center mt-4">
+            Watch our latest featured video about our community and teachings.
+          </p>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="relative z-10 py-16 px-4 bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg">
         <div className="max-w-4xl mx-auto text-center">
@@ -102,6 +202,29 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Modal */}
+      {modalContent && (
+        <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50" onClick={() => setModalContent(null)}>
+          <div className="max-w-4xl max-h-[90vh] overflow-auto bg-white p-4 rounded-lg" onClick={(e) => e.stopPropagation()}>
+            {modalContent.type === 'image' ? (
+              <Image 
+                src={modalContent.src} 
+                alt={modalContent.alt || ''} 
+                width={800} 
+                height={600} 
+                className="w-full h-auto object-contain"
+              />
+            ) : (
+              <video src={modalContent.src} className="w-full h-auto" controls autoPlay />
+            )}
+            <div className="flex justify-between mt-4">
+              <button onClick={prevItem} className="bg-green-500 text-white px-4 py-2 rounded-full">Previous</button>
+              <button onClick={nextItem} className="bg-green-500 text-white px-4 py-2 rounded-full">Next</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
