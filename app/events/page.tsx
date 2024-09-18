@@ -1,52 +1,40 @@
+'use client';
+
+import { useState } from 'react';
 import Link from "next/link";
 
 export default function Events() {
-  return (
-    <div className="container mx-auto py-16 px-4">
-      <h1 className="text-5xl font-bold mb-12 text-center text-white">Events</h1>
-      
-      <section className="mb-16">
-        <h2 className="text-3xl font-bold mb-8 text-green-300">Upcoming Events</h2>
-        <div className="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg shadow-lg rounded-lg p-8 transition duration-300 ease-in-out transform hover:scale-105 hover:bg-opacity-20 hover:shadow-xl">
-          {/* Placeholder for interactive calendar component */}
-          <div className="bg-white bg-opacity-20 h-96 flex items-center justify-center mb-8 rounded-lg">
-            <p className="text-xl font-bold text-white">Interactive Calendar Component</p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {[
-              { title: "Monthly Dhikr Gathering", date: "May 15, 2023", time: "7:00 PM", location: "Ansarudeen Center" },
-              { title: "Ramadan Tafsir Series", date: "April 1-30, 2023", time: "Daily after Maghrib", location: "Online" },
-              { title: "Annual Tijaniyya Conference", date: "July 1-3, 2023", time: "All Day", location: "Convention Center" },
-              { title: "Youth Spiritual Retreat", date: "August 12-14, 2023", time: "All Day", location: "Campground" }
-            ].map((event) => (
-              <div key={event.title} className="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg p-6 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 hover:bg-opacity-20 hover:shadow-lg">
-                <h3 className="text-xl font-bold mb-2 text-green-300">{event.title}</h3>
-                <p className="mb-1 text-white"><strong>Date:</strong> {event.date}</p>
-                <p className="mb-1 text-white"><strong>Time:</strong> {event.time}</p>
-                <p className="mb-2 text-white"><strong>Location:</strong> {event.location}</p>
-                <Link href="#" className="text-green-300 hover:text-green-100 transition duration-300">Register</Link>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+  const [upcomingEvents] = useState([
+    { title: "Weekly Dhikr Gathering", date: "Every Thursday, 7:00 PM", location: "Ansarudeen Center" },
+    { title: "Monthly Quranic Study Circle", date: "First Saturday of each month, 2:00 PM", location: "Ansarudeen Center" },
+    { title: "Annual Mawlid Celebration", date: "October 15, 2023", location: "Indianapolis Convention Center" },
+    { title: "Youth Leadership Workshop", date: "July 22-23, 2023", location: "Ansarudeen Youth Center" },
+    { title: "Ramadan Iftar Gatherings", date: "Throughout Ramadan", location: "Various locations" },
+  ]);
 
-      <section>
-        <h2 className="text-3xl font-bold mb-8 text-green-300">Past Event Highlights</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {[
-            { title: "Mawlid Celebration", date: "October 8, 2022" },
-            { title: "Spiritual Leadership Workshop", date: "February 15, 2023" },
-            { title: "Community Iftar", date: "April 15, 2023" }
-          ].map((event) => (
-            <div key={event.title} className="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg p-6 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 hover:bg-opacity-20 hover:shadow-lg">
-              <h3 className="text-xl font-bold mb-2 text-green-300">{event.title}</h3>
-              <p className="mb-4 text-white">{event.date}</p>
-              <Link href="#" className="text-green-300 hover:text-green-100 transition duration-300">View Photos</Link>
-            </div>
-          ))}
-        </div>
-      </section>
+  return (
+    <div className="container mx-auto px-4 py-8">
+      <h1 className="text-4xl font-bold mb-6 text-white text-center">Events</h1>
+      <p className="text-white text-lg mb-8 text-center">
+        Stay updated with our upcoming events and gatherings. Join us in celebrating our faith and strengthening our community.
+      </p>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {upcomingEvents.map((event, index) => (
+          <div key={index} className="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg p-6 rounded-xl shadow-xl">
+            <h3 className="text-xl font-bold mb-2 text-white">{event.title}</h3>
+            <p className="text-white mb-1"><strong>Date:</strong> {event.date}</p>
+            <p className="text-white mb-4"><strong>Location:</strong> {event.location}</p>
+            <Link href={`/events/${event.title.toLowerCase().replace(/ /g, '-')}`} className="text-green-300 hover:text-green-100 transition duration-300">
+              Event Details
+            </Link>
+          </div>
+        ))}
+      </div>
+      <div className="mt-12 text-center">
+        <Link href="/contact" className="bg-white text-green-800 px-6 py-3 rounded-full text-lg font-semibold hover:bg-opacity-90 transition duration-300 shadow-lg">
+          Suggest an Event
+        </Link>
+      </div>
     </div>
   );
 }

@@ -8,9 +8,7 @@ export default function Home() {
   const [imageError, setImageError] = useState<{ [key: string]: boolean }>({});
 
   return (
-    <div className="flex flex-col min-h-screen relative overflow-hidden bg-gradient-to-br from-green-400 to-blue-500">
-      {/* Remove the Spiritual Inspiration section */}
-      
+    <>
       {/* Prophet's Name in Arabic */}
       <div className="absolute top-32 sm:top-36 left-1/2 transform -translate-x-1/2 z-50 w-full px-4">
         <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-white font-arabic animate-glow text-center">
@@ -23,16 +21,6 @@ export default function Home() {
         <div className="firework"></div>
         <div className="firework"></div>
         <div className="firework"></div>
-      </div>
-
-      {/* Background with dots */}
-      <div className="absolute inset-0">
-        <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-          <pattern id="dots" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
-            <circle cx="2" cy="2" r="1" fill="rgba(255,255,255,0.2)" />
-          </pattern>
-          <rect x="0" y="0" width="100%" height="100%" fill="url(#dots)" />
-        </svg>
       </div>
 
       {/* Hero Section */}
@@ -105,14 +93,14 @@ export default function Home() {
             ].map((item, index) => (
               <div key={index} className="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-xl overflow-hidden shadow-xl">
                 {item.type === 'image' ? (
-                  imageError[item.src] ? (
+                  imageError[item.src || ''] ? (
                     <div className="w-full h-48 flex items-center justify-center bg-gray-200 text-gray-500">
                       Image not available
                     </div>
                   ) : (
                     <Image 
-                      src={item.src || ''} 
-                      alt={item.alt || ''} 
+                      src={item.src || ''}
+                      alt={item.alt || ''}
                       width={400} 
                       height={300} 
                       className="w-full h-48 object-cover"
@@ -168,6 +156,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-    </div>
+    </>
   );
 }
+

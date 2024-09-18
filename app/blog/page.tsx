@@ -1,152 +1,206 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
-import FeaturedArticles from '../components/FeaturedArticles';
-import ClientSlider from '../components/ClientSlider';
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
-interface BlogPost {
-  id: number;
-  title: string;
-  excerpt: string;
-  date: string;
-  author: string;
-  category: string;
-  imageUrl: string;
-}
-
-const blogPosts: BlogPost[] = [
+// Extended mock data for blog posts
+const blogPosts = [
   {
     id: 1,
-    title: "The Spiritual Journey of Cheikh Ahmada Tijani",
-    excerpt: "Explore the life and teachings of the founder of the Tijaniyya order...",
-    date: "2023-05-15",
-    author: "Dr. Aisha Rahman",
-    category: "Biography",
-    imageUrl: "/images/cheikh-ahmada-tijani.jpg"
+    title: 'Breaking: Major Tijaniyya Conference Announced',
+    excerpt: 'Global leaders of the Tijaniyya order to convene in Senegal next month...',
+    author: 'Imam Abdullah',
+    date: 'June 15, 2023',
+    imageUrl: '/images/conference.jpg',
+    category: 'Events',
   },
   {
     id: 2,
-    title: "Understanding Tarbiya: The Path to Spiritual Growth",
-    excerpt: "Delve into the concept of Tarbiya and its importance in Islamic spirituality...",
-    date: "2023-05-01",
-    author: "Imam Yusuf Abdullah",
-    category: "Spirituality",
-    imageUrl: "/images/tarbiya.jpg"
+    title: 'The Spiritual Science of Dhikr',
+    excerpt: 'New study reveals the neurological benefits of regular Dhikr practice...',
+    author: 'Dr. Aisha Rahman',
+    date: 'June 10, 2023',
+    imageUrl: '/images/dhikr.jpg',
+    category: 'Research',
   },
   {
     id: 3,
-    title: "The Global Impact of Cheikh Ibrahim Niass",
-    excerpt: "Discover how Cheikh Ibrahim Niass spread the Tijaniyya teachings worldwide...",
-    date: "2023-04-20",
-    author: "Prof. Mariam Diallo",
-    category: "History",
-    imageUrl: "/images/cheikh-ibrahim-niass.jpg"
+    title: 'Profile: Rising Star in Islamic Scholarship',
+    excerpt: 'Meet the young Tijaniyya scholar making waves in contemporary Islamic thought...',
+    author: 'Yusuf Ali',
+    date: 'June 5, 2023',
+    imageUrl: '/images/scholar.jpg',
+    category: 'People',
   },
   {
     id: 4,
-    title: "Dhikr in Daily Life: Remembrance of Allah",
-    excerpt: "Learn practical ways to incorporate dhikr into your daily routine...",
-    date: "2023-04-10",
-    author: "Shaykh Abdul Karim",
-    category: "Practice",
-    imageUrl: "/images/dhikr.jpg"
+    title: 'Tijaniyya Teachings: A Modern Perspective',
+    excerpt: 'How ancient wisdom is finding new relevance in the digital age...',
+    author: 'Shaykh Ibrahim',
+    date: 'May 30, 2023',
+    imageUrl: '/images/modern-tijani.jpg',
+    category: 'Opinion',
   },
   {
     id: 5,
-    title: "The Wisdom of Jawahir al-Ma'ani",
-    excerpt: "An in-depth analysis of key teachings from this seminal Tijaniyya text...",
-    date: "2023-03-28",
-    author: "Dr. Fatima Zahra",
-    category: "Literature",
-    imageUrl: "/images/jawahir-al-maani.jpg"
+    title: 'Exclusive: Interview with Tijaniyya Grand Imam',
+    excerpt: 'Rare insights into the future direction of the Tijaniyya order...',
+    author: 'Fatima Hassan',
+    date: 'May 25, 2023',
+    imageUrl: '/images/grand-imam.jpg',
+    category: 'Interview',
   },
   {
     id: 6,
-    title: "The Role of Sufism in Modern Society",
-    excerpt: "Exploring how Sufi teachings can address contemporary challenges...",
-    date: "2023-03-15",
-    author: "Dr. Hassan Ali",
-    category: "Spirituality",
-    imageUrl: "/images/sufism-modern-society.jpg"
+    title: 'Tijaniyya Youth Movement Gains Momentum',
+    excerpt: 'How young followers are revitalizing the Tijaniyya tradition...',
+    author: 'Ahmed Seck',
+    date: 'May 20, 2023',
+    imageUrl: '/images/youth-movement.jpg',
+    category: 'Trends',
   },
   {
     id: 7,
-    title: "Women Scholars in the Tijaniyya Tradition",
-    excerpt: "Highlighting the contributions of female scholars to Tijaniyya teachings...",
-    date: "2023-03-01",
-    author: "Prof. Amina Sow",
-    category: "History",
-    imageUrl: "/images/women-scholars.jpg"
+    title: 'The Role of Women in Tijaniyya Spirituality',
+    excerpt: 'Exploring the significant contributions of women in shaping the Tijaniyya path...',
+    author: 'Maryam Diop',
+    date: 'May 15, 2023',
+    imageUrl: '/images/women-tijaniyya.jpg',
+    category: 'Feature',
   },
   {
     id: 8,
-    title: "The Concept of Fayda in Tijaniyya",
-    excerpt: "Understanding the spiritual flood and its significance in Tijaniyya...",
-    date: "2023-02-15",
-    author: "Shaykh Ibrahim Faye",
-    category: "Spirituality",
-    imageUrl: "/images/fayda-concept.jpg"
+    title: 'Tijaniyya and Social Justice: A Call to Action',
+    excerpt: 'How Tijaniyya principles are inspiring community service and social reform...',
+    author: 'Omar Faye',
+    date: 'May 10, 2023',
+    imageUrl: '/images/social-justice.jpg',
+    category: 'Community',
+  },
+  {
+    id: 9,
+    title: 'The Art of Tijaniyya Calligraphy',
+    excerpt: 'Discover the beauty and spiritual significance of Tijaniyya-inspired Islamic art...',
+    author: 'Aisha Bah',
+    date: 'May 5, 2023',
+    imageUrl: '/images/calligraphy.jpg',
+    category: 'Culture',
+  },
+  {
+    id: 10,
+    title: 'Tijaniyya in the Digital Age: Online Communities',
+    excerpt: 'How virtual spaces are connecting Tijaniyya followers across the globe...',
+    author: 'Malik Sy',
+    date: 'April 30, 2023',
+    imageUrl: '/images/digital-tijaniyya.jpg',
+    category: 'Technology',
+  },
+  {
+    id: 11,
+    title: 'The Ecological Teachings of Tijaniyya',
+    excerpt: 'Exploring the environmental wisdom embedded in Tijaniyya philosophy...',
+    author: 'Aminata Tall',
+    date: 'April 25, 2023',
+    imageUrl: '/images/eco-tijaniyya.jpg',
+    category: 'Environment',
+  },
+  {
+    id: 12,
+    title: 'Tijaniyya and Interfaith Dialogue',
+    excerpt: 'How Tijaniyya leaders are fostering understanding across religious boundaries...',
+    author: 'Ibrahim Ndiaye',
+    date: 'April 20, 2023',
+    imageUrl: '/images/interfaith.jpg',
+    category: 'Dialogue',
   },
 ];
+
+const featuredPosts = blogPosts.slice(0, 5); // Use the first 5 posts as featured
 
 export default function Blog() {
   const sliderSettings = {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 3,
+    slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 5000,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1,
-        }
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1
-        }
-      }
-    ]
+    autoplaySpeed: 3000,
   };
 
   return (
-    <div className="container mx-auto py-16 px-4">
-      <h1 className="text-5xl font-bold mb-12 text-center text-white">Ansarudeen Indiana Blog</h1>
-      
-      {/* Featured Articles Slider */}
-      <FeaturedArticles blogPosts={blogPosts} />
-
-      {/* Recent Articles Slider */}
-      <section className="mb-16">
-        <h2 className="text-3xl font-bold mb-8 text-green-300">Recent Articles</h2>
-        <ClientSlider settings={sliderSettings}>
-          {blogPosts.map((post) => (
-            <div key={post.id} className="px-2">
-              <div className="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-xl overflow-hidden shadow-lg transition duration-300 ease-in-out transform hover:scale-105 hover:bg-opacity-20 h-full">
-                <Image src={post.imageUrl} alt={post.title} width={400} height={200} className="w-full h-48 object-cover" />
-                <div className="p-6">
-                  <div className="uppercase tracking-wide text-sm text-green-300 font-semibold">{post.category}</div>
-                  <Link href={`/blog/${post.id}`} className="block mt-2 text-xl leading-tight font-bold text-white hover:underline">
-                    {post.title}
-                  </Link>
-                  <p className="mt-2 text-gray-300">{post.excerpt}</p>
-                  <div className="mt-4">
-                    <span className="text-gray-400">{post.date} | By {post.author}</span>
+    <div className="min-h-screen bg-gradient-to-br from-green-400 to-blue-500 text-white">
+      <div className="container mx-auto px-4 py-16">
+        <h1 className="text-5xl font-bold mb-12 text-center">Ansarudeen Indiana News</h1>
+        
+        {/* Featured Posts Slider */}
+        <div className="mb-16">
+          <h2 className="text-3xl font-bold mb-6 text-center">Featured Posts</h2>
+          <Slider {...sliderSettings}>
+            {featuredPosts.map((post) => (
+              <div key={post.id} className="px-2">
+                <div className="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg overflow-hidden shadow-lg">
+                  <div className="relative">
+                    <Image
+                      src={post.imageUrl}
+                      alt={post.title}
+                      width={1200}
+                      height={600}
+                      className="w-full h-64 object-cover"
+                    />
+                    <div className="absolute top-0 left-0 bg-green-500 text-white px-2 py-1 text-sm font-bold">
+                      {post.category}
+                    </div>
                   </div>
+                  <div className="p-6">
+                    <h3 className="text-2xl font-bold mb-2">{post.title}</h3>
+                    <p className="text-gray-200 mb-4">{post.excerpt}</p>
+                    <Link href={`/blog/${post.id}`} className="inline-block bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition-colors duration-300">
+                      Read More
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </Slider>
+        </div>
+
+        {/* Regular Blog Posts Grid */}
+        <h2 className="text-3xl font-bold mb-6 text-center">All Posts</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {blogPosts.map((post) => (
+            <div key={post.id} className="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg overflow-hidden shadow-lg transition-transform duration-300 hover:scale-105">
+              <div className="relative">
+                <Image
+                  src={post.imageUrl}
+                  alt={post.title}
+                  width={800}
+                  height={500}
+                  className="w-full h-48 object-cover"
+                />
+                <div className="absolute top-0 left-0 bg-green-500 text-white px-2 py-1 text-sm font-bold">
+                  {post.category}
+                </div>
+              </div>
+              <div className="p-6 flex flex-col h-full">
+                <h2 className="font-bold mb-2 text-xl">{post.title}</h2>
+                <p className="text-sm text-gray-200 mb-4">
+                  By {post.author} | {post.date}
+                </p>
+                <p className="text-gray-100 mb-4 flex-grow">{post.excerpt}</p>
+                <div className="text-right">
+                  <Link href={`/blog/${post.id}`} className="inline-block bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition-colors duration-300">
+                    Read More
+                  </Link>
                 </div>
               </div>
             </div>
           ))}
-        </ClientSlider>
-      </section>
-
-      {/* Categories section removed */}
+        </div>
+      </div>
     </div>
   );
 }
