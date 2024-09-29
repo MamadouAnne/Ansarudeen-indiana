@@ -1,53 +1,51 @@
 'use client';
 
-import Link from 'next/link';
-import { useState } from 'react';
+import Link from "next/link";
+import { useState, useEffect } from "react";
+import { usePathname } from 'next/navigation';
 
-const Navigation = () => {
-  const [isOpen, setIsOpen] = useState(false);
+export default function Navigation() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathname = usePathname();
 
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const closeMenu = () => {
-    setIsOpen(false);
-  };
+  // Close menu when route changes
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, [pathname]);
 
   return (
-    <nav className="flex items-center justify-between flex-wrap">
-      <div className="flex items-center flex-shrink-0 text-white mr-6">
-        <Link href="/" className="font-semibold text-xl tracking-tight">Ansarudeen Indiana</Link>
-      </div>
-      <div className="block lg:hidden">
-        <button onClick={toggleMenu} className="flex items-center px-3 py-2 border rounded text-white border-white hover:text-white hover:border-white">
-          <svg className="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-            <title>Menu</title>
-            <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/>
+    <nav className="bg-green-800 bg-opacity-80 text-white p-4 sticky top-0 z-50">
+      <div className="max-w-6xl mx-auto flex justify-between items-center">
+        <Link href="/" className="text-2xl font-bold">Ansarudeen Indiana</Link>
+        <div className="hidden md:flex space-x-4">
+          <Link href="/" className="hover:text-green-200">Home</Link>
+          <Link href="/about" className="hover:text-green-200">About</Link>
+          <Link href="/teachings" className="hover:text-green-200">Teachings</Link>
+          <Link href="/events" className="hover:text-green-200">Events</Link>
+          <Link href="/gallery" className="hover:text-green-200">Gallery</Link>
+          <Link href="/resources" className="hover:text-green-200">Resources</Link>
+          <Link href="/contact" className="hover:text-green-200">Contact</Link>
+        </div>
+        <button 
+          className="md:hidden"
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" />
           </svg>
         </button>
       </div>
-      <div className={`w-full block flex-grow lg:flex lg:items-center lg:w-auto lg:ml-auto ${isOpen ? 'block' : 'hidden'}`}>
-        <div className="text-sm lg:flex lg:justify-end lg:flex-grow">
-          <Link href="/" className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4" onClick={closeMenu}>
-            Home
-          </Link>
-          <Link href="/about" className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4" onClick={closeMenu}>
-            About
-          </Link>
-          <Link href="/teachings" className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4" onClick={closeMenu}>
-            Teachings
-          </Link>
-          <Link href="/events" className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4" onClick={closeMenu}>
-            Events
-          </Link>
-          <Link href="/contact" className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white" onClick={closeMenu}>
-            Contact
-          </Link>
+      {isMenuOpen && (
+        <div className="md:hidden mt-4">
+          <Link href="/" className="block py-2 hover:text-green-200">Home</Link>
+          <Link href="/about" className="block py-2 hover:text-green-200">About</Link>
+          <Link href="/teachings" className="block py-2 hover:text-green-200">Teachings</Link>
+          <Link href="/events" className="block py-2 hover:text-green-200">Events</Link>
+          <Link href="/gallery" className="block py-2 hover:text-green-200">Gallery</Link>
+          <Link href="/resources" className="block py-2 hover:text-green-200">Resources</Link>
+          <Link href="/contact" className="block py-2 hover:text-green-200">Contact</Link>
         </div>
-      </div>
+      )}
     </nav>
   );
-};
-
-export default Navigation;
+}

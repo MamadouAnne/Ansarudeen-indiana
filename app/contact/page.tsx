@@ -1,84 +1,113 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useState } from 'react';
+import { FaMapMarkerAlt, FaPhone, FaEnvelope, FaFacebook, FaInstagram, FaTwitter } from 'react-icons/fa';
+import DonationForm from '../components/DonationForm';
 
-export default function Contact() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: '',
-  });
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+const ContactPage = () => {
+  const [showDonationForm, setShowDonationForm] = useState(false);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Here you would typically send the form data to your server
-    console.log('Form submitted:', formData);
-    // Reset form after submission
-    setFormData({ name: '', email: '', message: '' });
+    // Handle form submission logic here
+    console.log('Form submitted');
   };
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-4xl font-bold mb-6 text-white text-center">Contact Us</h1>
-      <div className="max-w-2xl mx-auto bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-xl p-8 shadow-xl">
-        <p className="text-white text-lg mb-6 text-center">
-          Get in touch with us for more information or to join our community. We'd love to hear from you!
-        </p>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label htmlFor="name" className="block text-white mb-2">Name</label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              required
-              className="w-full px-3 py-2 bg-white bg-opacity-20 rounded-md text-white"
-            />
-          </div>
-          <div>
-            <label htmlFor="email" className="block text-white mb-2">Email</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-              className="w-full px-3 py-2 bg-white bg-opacity-20 rounded-md text-white"
-            />
-          </div>
-          <div>
-            <label htmlFor="message" className="block text-white mb-2">Message</label>
-            <textarea
-              id="message"
-              name="message"
-              value={formData.message}
-              onChange={handleChange}
-              required
-              rows={4}
-              className="w-full px-3 py-2 bg-white bg-opacity-20 rounded-md text-white"
-            ></textarea>
-          </div>
-          <div>
-            <button type="submit" className="bg-white text-green-800 px-6 py-3 rounded-full text-lg font-semibold hover:bg-opacity-90 transition duration-300 shadow-lg">
+      <h1 className="text-3xl font-bold mb-8">Contact Us</h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div>
+          <h2 className="text-2xl font-semibold mb-4">Get in Touch</h2>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label htmlFor="name" className="block mb-2">Name</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                required
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 text-gray-700"
+              />
+            </div>
+            <div>
+              <label htmlFor="email" className="block mb-2">Email</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                required
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 text-gray-700"
+              />
+            </div>
+            <div>
+              <label htmlFor="message" className="block mb-2">Message</label>
+              <textarea
+                id="message"
+                name="message"
+                rows={4}
+                required
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 text-gray-700"
+              ></textarea>
+            </div>
+            <button
+              type="submit"
+              className="bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 transition duration-300"
+            >
               Send Message
             </button>
+          </form>
+
+          <div className="mt-8">
+            <h3 className="text-xl font-semibold mb-4">Contact Information</h3>
+            <div className="space-y-2">
+              <p className="flex items-center">
+                <FaMapMarkerAlt className="mr-2" />
+                123 Main St, Indianapolis, IN 46201
+              </p>
+              <p className="flex items-center">
+                <FaPhone className="mr-2" />
+                (317) 555-1234
+              </p>
+              <p className="flex items-center">
+                <FaEnvelope className="mr-2" />
+                info@ansarudeenindy.org
+              </p>
+            </div>
           </div>
-        </form>
-      </div>
-      <div className="mt-12 text-center">
-        <h2 className="text-2xl font-bold mb-4 text-white">Visit Us</h2>
-        <p className="text-white">Ansarudeen Indiana Center</p>
-        <p className="text-white">123 Main Street, Indianapolis, IN 46201</p>
-        <p className="text-white mt-4">Phone: (317) 555-1234</p>
-        <p className="text-white">Email: info@ansarudeen-indiana.org</p>
+
+          <div className="mt-8">
+            <h3 className="text-xl font-semibold mb-4">Follow Us</h3>
+            <div className="flex space-x-4">
+              <a href="#" className="text-2xl hover:text-green-500 transition duration-300">
+                <FaFacebook />
+              </a>
+              <a href="#" className="text-2xl hover:text-green-500 transition duration-300">
+                <FaInstagram />
+              </a>
+              <a href="#" className="text-2xl hover:text-green-500 transition duration-300">
+                <FaTwitter />
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div id="donate">
+          <h2 className="text-2xl font-semibold mb-4">Support Our Cause</h2>
+          {!showDonationForm ? (
+            <button
+              onClick={() => setShowDonationForm(true)}
+              className="bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 transition duration-300"
+            >
+              I Want to Donate
+            </button>
+          ) : (
+            <DonationForm onCancel={() => setShowDonationForm(false)} />
+          )}
+        </div>
       </div>
     </div>
   );
-}
+};
+
+export default ContactPage;
